@@ -26,7 +26,7 @@ public class Main {
     port(Integer.valueOf(System.getenv("PORT")));
     staticFileLocation("/public");
 
-     get("/prueba/:name/:credit", (request, response) -> {
+     get("/validar/:name/:credit", (request, response) -> {
            cedulas.forEach(cedula->{
                if(request.params(":name").equals(cedula)){
                    if(validar.isValid(request.params(":credit"))){
