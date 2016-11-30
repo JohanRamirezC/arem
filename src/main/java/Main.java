@@ -15,24 +15,17 @@ import com.heroku.sdk.jdbc.DatabaseUrl;
 import org.apache.commons.validator.routines.CreditCardValidator;
 
 public class Main {
-    static ArrayList<String> cedulas;
-    static String verdad;
     static CreditCardValidator validar;
-  public static void main(String[] args) {
-    cedulas = new ArrayList<String>();
-    validar=new CreditCardValidator(CreditCardValidator.AMEX+CreditCardValidator.VISA+CreditCardValidator.MASTERCARD+CreditCardValidator.DINERS);
-        cedulas.add("1020758841");
-        cedulas.add("41741678");
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
-
-     get("/validar/:name/:credit", (request, response) -> {
-           cedulas.forEach(cedula->{
-               if(request.params(":name").equals(cedula)){
-                   if(validar.isValid(request.params(":credit"))){
-                       verdad="El cliente puede comprar y tienen una tarjeta valida";
+    ArrayList<String> cedulas;
+     String verdad;
+    private String validar(ArrayList<String> cedulas,String name,String credit){
+        verdad="";
+        cedulas.forEach(cedula->{
+               if(name.equals(cedula)){
+                   if(validar.isValid(credit)){
+                      verdad="El cliente puede comprar y tienen una tarjeta valida";
                    }else{
-                       verdad="El cliente puede comprar pero no posee una tarjeta valida";
+                      verdad="El cliente puede comprar pero no posee una tarjeta valida";
                    }
                }
            });
@@ -40,6 +33,17 @@ public class Main {
                verdad="No puede comprar el cliente";
            }
             return verdad;
+    }
+  public static void main(String[] args) {
+   ArrayList<String> cedulas = new ArrayList<String>();
+    validar=new CreditCardValidator(CreditCardValidator.AMEX+CreditCardValidator.VISA+CreditCardValidator.MASTERCARD+CreditCardValidator.DINERS);
+        cedulas.add("1020758841");
+        cedulas.add("41741678");
+    port(Integer.valueOf(System.getenv("PORT")));
+    staticFileLocation("/public");
+     get("/validar/:name/:credit", (request, response) -> {
+           Main verificar=new Main();
+            return verificar.validar(cedulas, request.params(":name"), request.params(":credit"));
         });
 
   }
