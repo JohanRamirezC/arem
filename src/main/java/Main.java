@@ -39,7 +39,7 @@ public class Main {
            if(verdad==null){
                verdad="No puede comprar el cliente";
            }
-            return "Hello: " + verdad;
+            return verdad;
         });
 
   }
