@@ -20,20 +20,16 @@ public class Main {
     
   public static void main(String[] args) {
    ArrayList<String> cedulas = new ArrayList<String>();
-    validar=new CreditCardValidator(CreditCardValidator.AMEX+CreditCardValidator.VISA+CreditCardValidator.MASTERCARD+CreditCardValidator.DINERS);
+   
         cedulas.add("1020758841");
         cedulas.add("41741678");
     port(Integer.valueOf(System.getenv("PORT")));
     staticFileLocation("/public");
-     get("/validar/:name/:credit", (request, response) -> {
+     get("/:name", (request, response) -> {
          String v=null;
            for(int i=0;i<cedulas.size();i++){
                if(request.params(":name").equals(cedulas.get(i))){
-                   if(validar.isValid(request.params(":credit"))){
-                      v= "El cliente puede comprar y tienen una tarjeta valida";
-                   }else{
-                      v= "El cliente puede comprar pero no posee una tarjeta valida";
-                   }
+                   v="lo logramos perro";
                }
            }
            if(v==null){
