@@ -41,10 +41,10 @@ public class Main {
          String v=null;
            for(int i=0;i<facturas.size();i++){
                if(request.params(":name").equals(facturas.get(i))){
-                   v="id factura "+facturas.get(i)
-                     +" persona que recibe : "+personaRecibe.get(i)
-                     +" persona que entrega : "+personaEntrega.get(i)
-                     +" observacion : "+observacion.get(i);
+                   v=" Id factura "+facturas.get(i)+"\n"
+                     +" Persona que recibe : "+personaRecibe.get(i)+"\n"
+                     +" Persona que entrega : "+personaEntrega.get(i)+"\n"
+                     +" Observacion : "+observacion.get(i);
                }
            }
            if(v==null){
